@@ -952,6 +952,82 @@ const composerMessages = [
   'Agentor is ready. Let’s automate',
 ];
 
+const loaderWord = 'AGENTOR';
+
+function PageLoader() {
+  const [progress, setProgress] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [exiting, setExiting] = useState(false);
+  const [visible, setVisible] = useState(true);
+
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let frame = 0;
+    let progressTimer = 0;
+    let exitTimer = 0;
+    let hideTimer = 0;
+
+    const finish = () => {
+      root.classList.remove('page-is-loading');
+      setVisible(false);
+    };
+
+    root.classList.add('page-is-loading');
+    setRunning(true);
+
+    if (reducedMotion) {
+      setProgress(100);
+      exitTimer = window.setTimeout(() => setExiting(true), 120);
+      hideTimer = window.setTimeout(finish, 320);
+    } else {
+      progressTimer = window.setTimeout(() => {
+        const startedAt = performance.now();
+        const duration = 480;
+
+        const tick = (now: number) => {
+          const elapsed = Math.min((now - startedAt) / duration, 1);
+          const eased = 1 - Math.pow(1 - elapsed, 4);
+          setProgress(Math.round(eased * 100));
+          if (elapsed < 1) frame = requestAnimationFrame(tick);
+        };
+
+        frame = requestAnimationFrame(tick);
+      }, 450);
+      exitTimer = window.setTimeout(() => setExiting(true), 3000);
+      hideTimer = window.setTimeout(finish, 3420);
+    }
+
+    return () => {
+      root.classList.remove('page-is-loading');
+      cancelAnimationFrame(frame);
+      window.clearTimeout(progressTimer);
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div
+      className={`site-loader${running ? ' is-running' : ''}${exiting ? ' is-exiting' : ''}`}
+      aria-hidden="true"
+    >
+      <div className="site-loader-panel site-loader-panel-top">
+        <div className="site-loader-word">
+          {loaderWord.split('').map((letter, index) => (
+            <span key={`${letter}-${index}`} style={{ animationDelay: `${300 + index * 50}ms` }}>{letter}</span>
+          ))}
+        </div>
+      </div>
+      <div className="site-loader-panel site-loader-panel-bottom">
+        <div className="site-loader-progress">[{progress}%]</div>
+      </div>
+    </div>
+  );
+}
+
 function HeroComposer() {
   const [typedText, setTypedText] = useState('');
 
@@ -1031,24 +1107,27 @@ export default function Home() {
   useScrollReveals();
 
   return (
-    <main id="top">
-      <Header />
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <TrustPill />
-          <RevealHeading as="h1" id="hero-title" mount breakAfter={3}>Deploy agents that do the actual work</RevealHeading>
-          <p data-reveal="rise" data-reveal-mount>Build, orchestrate, and scale intelligent agents that integrate with every tool, run 24/7, and handle your most complex workflows.</p>
-          <HeroComposer />
-        </div>
-        <AgentConsole />
-      </section>
-      <Features />
-      <Process />
-      <Testimonials />
-      <Pricing />
-      <FAQ />
-      <ClosingCTA />
-      <Footer />
-    </main>
+    <>
+      <PageLoader />
+      <main id="top">
+        <Header />
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <TrustPill />
+            <RevealHeading as="h1" id="hero-title" mount breakAfter={3}>Deploy agents that do the actual work</RevealHeading>
+            <p data-reveal="rise" data-reveal-mount>Build, orchestrate, and scale intelligent agents that integrate with every tool, run 24/7, and handle your most complex workflows.</p>
+            <HeroComposer />
+          </div>
+          <AgentConsole />
+        </section>
+        <Features />
+        <Process />
+        <Testimonials />
+        <Pricing />
+        <FAQ />
+        <ClosingCTA />
+        <Footer />
+      </main>
+    </>
   );
 }
