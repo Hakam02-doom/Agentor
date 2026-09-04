@@ -1199,12 +1199,8 @@ function MaxonHero() {
   }, [menuOpen]);
 
   return (
-    <section className={`maxon-hero${entered ? ' is-entered' : ''}${menuOpen ? ' is-menu-open' : ''}`} aria-labelledby="hero-title">
-      <div className="maxon-hero-background" aria-hidden="true">
-        <img src="https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036" alt="" />
-      </div>
-
-      <header className="maxon-nav">
+    <>
+      <header className={`maxon-nav${entered ? ' is-entered' : ''}${menuOpen ? ' is-menu-open' : ''}`}>
         <a className="maxon-brand" href="#top" aria-label="Agentor home">
           <img src="/agentor-mark.svg" alt="" />
           <span>Agentor</span>
@@ -1227,6 +1223,11 @@ function MaxonHero() {
           onClick={() => setMenuOpen((open) => !open)}
         ><span /><span /></button>
       </header>
+
+      <section className={`maxon-hero${entered ? ' is-entered' : ''}`} aria-labelledby="hero-title">
+        <div className="maxon-hero-background" aria-hidden="true">
+          <img src="https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036" alt="" />
+        </div>
 
       <div className="maxon-hero-content">
         <div className="maxon-eyebrow">AI AGENTS FOR ON-CHAIN EXECUTION — ON AUTOPILOT</div>
@@ -1260,8 +1261,9 @@ function MaxonHero() {
           <a className="maxon-action maxon-action-dark" href="#process"><span>Build agent</span></a>
           <a className="maxon-action maxon-action-blue" href="#pricing"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 5 8 5-8 5V5Z" /></svg><span>Build agent</span></a>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }
 

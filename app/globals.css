@@ -283,8 +283,8 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
 }
 .maxon-hero-background img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
 .maxon-nav {
-  position: absolute;
-  z-index: 10;
+  position: fixed;
+  z-index: 100;
   top: 26px;
   left: 50%;
   width: min(920px,calc(100% - 60px));
@@ -458,7 +458,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
 .maxon-action-blue { width: 171.16px; background: var(--maxon-blue); }
 .maxon-action:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(20,34,49,.14); }
 html.motion-ready .maxon-hero:not(.is-entered) .maxon-hero-background { transform: scale(1.2); }
-html.motion-ready .maxon-hero:not(.is-entered) .maxon-nav { opacity: .001; transform: translate3d(-50%,-80px,0); }
+html.motion-ready .maxon-nav:not(.is-entered) { opacity: .001; transform: translate3d(-50%,-80px,0); }
 html.motion-ready .maxon-hero:not(.is-entered) .maxon-eyebrow,
 html.motion-ready .maxon-hero:not(.is-entered) .maxon-heading-word,
 html.motion-ready .maxon-hero:not(.is-entered) .maxon-composer,
@@ -475,7 +475,7 @@ html.motion-ready .maxon-hero:not(.is-entered) .maxon-hero-actions { opacity: .0
 @media (max-width:809.98px) {
   .maxon-hero { height: auto; min-height: 100svh; padding: 125px 20px 60px; }
   .maxon-nav {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     left: 20px;
@@ -487,7 +487,7 @@ html.motion-ready .maxon-hero:not(.is-entered) .maxon-hero-actions { opacity: .0
     transform: none;
     overflow: visible;
   }
-  html.motion-ready .maxon-hero:not(.is-entered) .maxon-nav { transform: translate3d(0,-80px,0); }
+  html.motion-ready .maxon-nav:not(.is-entered) { transform: translate3d(0,-80px,0); }
   .maxon-brand { font-size: 15px; gap: 5px; }
   .maxon-brand img { width: 18px; height: 18px; }
   .maxon-nav nav {
@@ -532,9 +532,9 @@ html.motion-ready .maxon-hero:not(.is-entered) .maxon-hero-actions { opacity: .0
   }
   .maxon-menu-button span:first-child { top: 6px; }
   .maxon-menu-button span:last-child { top: 13px; }
-  .maxon-hero.is-menu-open .maxon-nav nav { opacity: 1; transform: translateY(0) scale(1); visibility: visible; pointer-events: auto; transition-delay: 0s; }
-  .maxon-hero.is-menu-open .maxon-menu-button span:first-child { top: 10px; transform: rotate(45deg); }
-  .maxon-hero.is-menu-open .maxon-menu-button span:last-child { top: 10px; transform: rotate(-45deg); }
+  .maxon-nav.is-menu-open nav { opacity: 1; transform: translateY(0) scale(1); visibility: visible; pointer-events: auto; transition-delay: 0s; }
+  .maxon-nav.is-menu-open .maxon-menu-button span:first-child { top: 10px; transform: rotate(45deg); }
+  .maxon-nav.is-menu-open .maxon-menu-button span:last-child { top: 10px; transform: rotate(-45deg); }
   .maxon-hero-content { max-width: 670px; gap: 24px; }
   .maxon-eyebrow { min-height: 35.2px; font-size: 10px; }
   .maxon-hero h1 { font-size: 40px; line-height: 1.08; letter-spacing: -1.5px; }
