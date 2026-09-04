@@ -673,12 +673,12 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   .site-header,.site-header.is-compact { top: 0; width: 100%; height: 64px; margin: 0; padding: 0 24px; grid-template-columns: 1fr auto; border-radius: 0; }
   .header-surface {
     inset: 0 0 auto;
-    height: 272px;
+    height: 400px;
     border: 0;
     border-radius: 0 0 16px 16px;
     background: rgba(255,255,255,.98);
     box-shadow: none !important;
-    transform: scaleY(.2353);
+    transform: scaleY(.16);
     transform-origin: center top;
     transition: transform 520ms var(--reveal-spring),box-shadow 260ms ease;
   }
@@ -698,11 +698,11 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
     pointer-events: none;
     transition: opacity 220ms ease,translate 440ms var(--reveal-spring),visibility 0s linear 440ms;
   }
-  .site-header nav a { height: 36px; display: grid; place-items: center; font-size: 14px; }
+  .site-header nav a { height: 68px; display: grid; place-items: center; font-size: 22px; line-height: 1.2; }
   .site-header .header-action {
     position: absolute;
     z-index: 1;
-    top: 218px;
+    top: 334px;
     right: 24px;
     left: 24px;
     width: auto;
@@ -710,24 +710,26 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
     justify-self: stretch;
     opacity: 0;
     translate: 0 -8px;
+    scale: .72;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 220ms ease,translate 440ms var(--reveal-spring),visibility 0s linear 440ms;
+    transition: opacity 220ms ease,translate 520ms var(--reveal-spring),scale 520ms var(--reveal-spring),visibility 0s linear 520ms;
   }
-  .site-header .header-action .button { width: 100%; min-height: 38px; border-radius: 10px; }
+  .site-header .header-action .button { width: 100%; min-height: 50px; border-radius: 10px; font-size: 22px; }
   .site-header.is-menu-open nav,.site-header.is-menu-open .header-action {
     opacity: 1;
     translate: 0 0;
+    scale: 1;
     visibility: visible;
     pointer-events: auto;
     transition-delay: 120ms;
   }
   .brand { font-size: 20px; }
-  .menu-button { display: block; width: 34px; height: 28px; transition: width 300ms var(--reveal-spring),height 300ms var(--reveal-spring),border-radius 300ms var(--reveal-spring),background-color 180ms ease; }
-  .menu-button span { left: 0; width: 34px; height: 2px; }
+  .menu-button { display: block; width: 26px; height: 24px; transition: width 300ms var(--reveal-spring),height 300ms var(--reveal-spring),border-radius 300ms var(--reveal-spring),background-color 180ms ease; }
+  .menu-button span { left: 2px; width: 24px; height: 1.5px; }
   .menu-button span:nth-child(1) { top: 3px; }
-  .menu-button span:nth-child(2) { top: 13px; left: 10px; width: 24px; }
-  .menu-button span:nth-child(3) { top: 23px; }
+  .menu-button span:nth-child(2) { top: 11px; left: 10px; width: 16px; }
+  .menu-button span:nth-child(3) { top: 19px; }
   .site-header.is-menu-open .menu-button { width: 24px; height: 24px; border-radius: 50%; background: #d7dce3; }
   .site-header.is-menu-open .menu-button span { top: 11px; left: 6px; width: 12px; background: #354052; }
   .site-header.is-menu-open .menu-button span:nth-child(1) { transform: rotate(45deg); }
