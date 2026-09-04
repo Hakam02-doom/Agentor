@@ -284,7 +284,13 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   pointer-events: none;
   background: linear-gradient(180deg,rgba(232,247,255,.04),rgba(255,255,255,.03));
 }
-.maxon-hero-background img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.maxon-hero-depth-layer {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+.maxon-hero-depth-layer img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
 .maxon-nav {
   position: fixed;
   z-index: 100;

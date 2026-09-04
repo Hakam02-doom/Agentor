@@ -1129,6 +1129,8 @@ function MaxonHero() {
   const [entered, setEntered] = useState(false);
   const [typedText, setTypedText] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
+  const depthLayerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1198,6 +1200,39 @@ function MaxonHero() {
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, [menuOpen]);
 
+  useEffect(() => {
+    const hero = heroRef.current;
+    const depthLayer = depthLayerRef.current;
+    if (!hero || !depthLayer) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      depthLayer.style.transform = 'none';
+      return;
+    }
+
+    let frame = 0;
+    const updateDepth = () => {
+      frame = 0;
+      const heroRect = hero.getBoundingClientRect();
+      const heroTravel = Math.min(Math.max(-heroRect.top, 0), heroRect.height);
+      depthLayer.style.transform = `translate3d(0, ${heroTravel * 0.2}px, 0)`;
+    };
+    const requestDepthUpdate = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(updateDepth);
+    };
+
+    updateDepth();
+    window.addEventListener('scroll', requestDepthUpdate, { passive: true });
+    window.addEventListener('resize', requestDepthUpdate);
+    return () => {
+      window.removeEventListener('scroll', requestDepthUpdate);
+      window.removeEventListener('resize', requestDepthUpdate);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <>
       <header className={`maxon-nav${entered ? ' is-entered' : ''}${menuOpen ? ' is-menu-open' : ''}`}>
@@ -1224,9 +1259,11 @@ function MaxonHero() {
         ><span /><span /></button>
       </header>
 
-      <section className={`maxon-hero${entered ? ' is-entered' : ''}`} aria-labelledby="hero-title">
+      <section ref={heroRef} className={`maxon-hero${entered ? ' is-entered' : ''}`} aria-labelledby="hero-title">
         <div className="maxon-hero-background" aria-hidden="true">
-          <img src="https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036" alt="" />
+          <div ref={depthLayerRef} className="maxon-hero-depth-layer">
+            <img src="https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036" alt="" />
+          </div>
         </div>
 
       <div className="maxon-hero-content">
