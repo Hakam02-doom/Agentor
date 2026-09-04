@@ -290,9 +290,9 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   width: min(920px,calc(100% - 60px));
   min-height: 73.6px;
   padding: 12px 28px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   border-radius: 32px;
   background: rgba(255,255,255,.2);
   -webkit-backdrop-filter: blur(5px);
@@ -318,7 +318,8 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
 .maxon-nav nav a { font-size: 12px; font-weight: 600; line-height: 1.6; letter-spacing: -.025em; transition: color 180ms ease; }
 .maxon-nav nav a:hover { color: var(--maxon-blue); }
 .maxon-nav-cta {
-  justify-self: end;
+  width: 171.11px;
+  flex: 0 0 171.11px;
   min-height: 49.6px;
   padding: 0 30px;
   display: inline-flex;
@@ -481,7 +482,7 @@ html.motion-ready .maxon-hero:not(.is-entered) .maxon-hero-actions { opacity: .0
     width: auto;
     min-height: 41px;
     padding: 12px 16px;
-    grid-template-columns: 1fr auto;
+    justify-content: space-between;
     border-radius: 24px;
     transform: none;
     overflow: visible;

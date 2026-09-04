@@ -1109,7 +1109,7 @@ const maxonHeroWords = [
   { text: 'That', line: 1 },
   { text: 'Think.', line: 1 },
   { text: 'Execute', line: 2 },
-  { text: '24/7.', line: 2 },
+  { text: 'On-chain.', line: 2 },
 ];
 const SHOW_LEGACY_HERO_BACKUP = false;
 
@@ -1210,13 +1210,14 @@ function MaxonHero() {
           <span>Agentor</span>
         </a>
         <nav id="maxon-navigation" aria-label="Primary navigation" onClick={() => setMenuOpen(false)}>
-          <a href="#features">Why Us</a>
-          <a href="#process">How it works</a>
-          <a href="#testimonials">Testimonial</a>
+          <a href="#top">All Pages</a>
+          <a href="#features">About</a>
+          <a href="#process">Marketplace</a>
+          <a href="#testimonials">Blog</a>
           <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
+          <a href="#faq">Contact</a>
         </nav>
-        <a className="maxon-nav-cta" href="#pricing">See Demo</a>
+        <a className="maxon-nav-cta" href="#pricing">Read the Docs</a>
         <button
           className="maxon-menu-button"
           type="button"
@@ -1228,7 +1229,7 @@ function MaxonHero() {
       </header>
 
       <div className="maxon-hero-content">
-        <div className="maxon-eyebrow">AI AGENTS FOR COMPLEX WORKFLOWS — ON AUTOPILOT</div>
+        <div className="maxon-eyebrow">AI AGENTS FOR ON-CHAIN EXECUTION — ON AUTOPILOT</div>
         <h1 id="hero-title">
           <span className="maxon-heading-line">
             {maxonHeroWords.filter(({ line }) => line === 1).map(({ text }, index) => <span className="maxon-heading-word" style={{ '--word-index': index } as React.CSSProperties} key={text}>{text}</span>)}
@@ -1257,7 +1258,7 @@ function MaxonHero() {
 
         <div className="maxon-hero-actions">
           <a className="maxon-action maxon-action-dark" href="#process"><span>Build agent</span></a>
-          <a className="maxon-action maxon-action-blue" href="#pricing"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 5 8 5-8 5V5Z" /></svg><span>See Demo</span></a>
+          <a className="maxon-action maxon-action-blue" href="#pricing"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 5 8 5-8 5V5Z" /></svg><span>Build agent</span></a>
         </div>
       </div>
     </section>
