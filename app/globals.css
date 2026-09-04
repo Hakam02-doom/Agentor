@@ -677,7 +677,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
     border: 0;
     border-radius: 0 0 16px 16px;
     background: rgba(255,255,255,.98);
-    box-shadow: 0 12px 28px rgba(15,23,42,.08) !important;
+    box-shadow: none !important;
     transform: scaleY(.2353);
     transform-origin: center top;
     transition: transform 520ms var(--reveal-spring),box-shadow 260ms ease;
@@ -723,7 +723,11 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
     transition-delay: 120ms;
   }
   .brand { font-size: 20px; }
-  .menu-button { display: block; transition: width 300ms var(--reveal-spring),height 300ms var(--reveal-spring),border-radius 300ms var(--reveal-spring),background-color 180ms ease; }
+  .menu-button { display: block; width: 34px; height: 28px; transition: width 300ms var(--reveal-spring),height 300ms var(--reveal-spring),border-radius 300ms var(--reveal-spring),background-color 180ms ease; }
+  .menu-button span { left: 0; width: 34px; height: 2px; }
+  .menu-button span:nth-child(1) { top: 3px; }
+  .menu-button span:nth-child(2) { top: 13px; left: 10px; width: 24px; }
+  .menu-button span:nth-child(3) { top: 23px; }
   .site-header.is-menu-open .menu-button { width: 24px; height: 24px; border-radius: 50%; background: #d7dce3; }
   .site-header.is-menu-open .menu-button span { top: 11px; left: 6px; width: 12px; background: #354052; }
   .site-header.is-menu-open .menu-button span:nth-child(1) { transform: rotate(45deg); }
