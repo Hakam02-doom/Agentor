@@ -1113,6 +1113,11 @@ const maxonHeroWords = [
 ];
 const SHOW_LEGACY_HERO_BACKUP = false;
 const SHOW_MAXON_NAV_BACKUP = false;
+const MAXON_HERO_BACKGROUNDS = [
+  'https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036',
+  '/agentor-hero-option-1.png',
+] as const;
+const ACTIVE_MAXON_HERO_BACKGROUND = MAXON_HERO_BACKGROUNDS[1];
 
 function MaxonComposerIcon({ name }: { name: 'search' | 'attachment' | 'bag' | 'wallet' }) {
   const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -1266,7 +1271,7 @@ function MaxonHero() {
       <section ref={heroRef} className={`maxon-hero${entered ? ' is-entered' : ''}`} aria-labelledby="hero-title">
         <div className="maxon-hero-background" aria-hidden="true">
           <div ref={depthLayerRef} className="maxon-hero-depth-layer">
-            <img src="https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036" alt="" />
+            <img src={ACTIVE_MAXON_HERO_BACKGROUND} alt="" />
           </div>
         </div>
 
