@@ -248,9 +248,12 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
 .menu-button span:nth-child(2) { top: 14px; }
 .menu-button span:nth-child(3) { top: 21px; }
 
+.maxon-nav,
 .maxon-hero {
   --maxon-ink: #142231;
   --maxon-blue: #2f6bd6;
+}
+.maxon-hero {
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -308,14 +311,14 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   align-items: center;
   gap: 6px;
   color: var(--maxon-ink);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -.035em;
 }
 .maxon-brand img { width: 20px; height: 20px; display: block; }
 .maxon-nav nav { display: flex; align-items: center; gap: 24px; white-space: nowrap; }
-.maxon-nav nav a { font-size: 12px; font-weight: 600; line-height: 1.6; letter-spacing: -.025em; transition: color 180ms ease; }
+.maxon-nav nav a { font-size: 14px; font-weight: 600; line-height: 1.6; letter-spacing: -.025em; transition: color 180ms ease; }
 .maxon-nav nav a:hover { color: var(--maxon-blue); }
 .maxon-nav-cta {
   width: 171.11px;
@@ -327,7 +330,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   justify-content: center;
   border-radius: 22px;
   background: #e4edfb;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.6;
   transition: color 180ms ease,background-color 180ms ease,transform 240ms cubic-bezier(.23,1,.32,1);
