@@ -171,6 +171,12 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   background: transparent;
   transform-origin: center;
 }
+.site-header.is-hero-overlay {
+  position: fixed;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+}
 .header-surface {
   position: absolute;
   z-index: 0;
@@ -265,7 +271,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   justify-content: center;
   overflow: hidden;
   color: var(--maxon-ink);
-  font-family: 'Plus Jakarta Sans','Urbanist',sans-serif;
+  font-family: 'Urbanist',sans-serif;
 }
 .maxon-hero-background {
   position: absolute;
@@ -377,7 +383,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
   width: 100%;
   margin: 0;
   color: var(--maxon-ink);
-  font-family: 'Fraunces',Georgia,serif;
+  font-family: 'Urbanist',sans-serif;
   font-size: 76px;
   font-weight: 600;
   line-height: 1.08;

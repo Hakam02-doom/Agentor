@@ -124,7 +124,7 @@ function PrimaryButton({ children = 'See Demo' }: { children?: React.ReactNode }
   return <a className="button button-primary" href="#pricing">{children}</a>;
 }
 
-function Header() {
+function Header({ overlay = false }: { overlay?: boolean }) {
   const headerRef = useRef<HTMLElement>(null);
   const compactRef = useRef(false);
   const previousLayoutRef = useRef<{ surface: DOMRect; items: DOMRect[] } | null>(null);
@@ -233,7 +233,7 @@ function Header() {
   return (
     <header
       ref={headerRef}
-      className={`site-header${compact ? ' is-compact' : ''}${menuOpen ? ' is-menu-open' : ''}`}
+      className={`site-header${overlay ? ' is-hero-overlay' : ''}${compact ? ' is-compact' : ''}${menuOpen ? ' is-menu-open' : ''}`}
       onClick={(event) => {
         if ((event.target as HTMLElement).closest('a')) setMenuOpen(false);
       }}
@@ -1112,6 +1112,7 @@ const maxonHeroWords = [
   { text: 'On-chain.', line: 2 },
 ];
 const SHOW_LEGACY_HERO_BACKUP = false;
+const SHOW_MAXON_NAV_BACKUP = false;
 
 function MaxonComposerIcon({ name }: { name: 'search' | 'attachment' | 'bag' | 'wallet' }) {
   const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -1235,29 +1236,32 @@ function MaxonHero() {
 
   return (
     <>
-      <header className={`maxon-nav${entered ? ' is-entered' : ''}${menuOpen ? ' is-menu-open' : ''}`}>
-        <a className="maxon-brand" href="#top" aria-label="Agentor home">
-          <img src="/agentor-mark.svg" alt="" />
-          <span>Agentor</span>
-        </a>
-        <nav id="maxon-navigation" aria-label="Primary navigation" onClick={() => setMenuOpen(false)}>
-          <a href="#top">All Pages</a>
-          <a href="#features">About</a>
-          <a href="#process">Marketplace</a>
-          <a href="#testimonials">Blog</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">Contact</a>
-        </nav>
-        <a className="maxon-nav-cta" href="#pricing">Read the Docs</a>
-        <button
-          className="maxon-menu-button"
-          type="button"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-controls="maxon-navigation"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
-        ><span /><span /></button>
-      </header>
+      <Header overlay />
+      {SHOW_MAXON_NAV_BACKUP ? (
+        <header className={`maxon-nav${entered ? ' is-entered' : ''}${menuOpen ? ' is-menu-open' : ''}`}>
+          <a className="maxon-brand" href="#top" aria-label="Agentor home">
+            <img src="/agentor-mark.svg" alt="" />
+            <span>Agentor</span>
+          </a>
+          <nav id="maxon-navigation" aria-label="Primary navigation" onClick={() => setMenuOpen(false)}>
+            <a href="#top">All Pages</a>
+            <a href="#features">About</a>
+            <a href="#process">Marketplace</a>
+            <a href="#testimonials">Blog</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">Contact</a>
+          </nav>
+          <a className="maxon-nav-cta" href="#pricing">Read the Docs</a>
+          <button
+            className="maxon-menu-button"
+            type="button"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-controls="maxon-navigation"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          ><span /><span /></button>
+        </header>
+      ) : null}
 
       <section ref={heroRef} className={`maxon-hero${entered ? ' is-entered' : ''}`} aria-labelledby="hero-title">
         <div className="maxon-hero-background" aria-hidden="true">
