@@ -167,9 +167,9 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
 .hero {
   position: relative;
   width: min(1400px, calc(100% - 48px));
-  min-height: 1102.6px;
+  min-height: 650px;
   margin: 0 auto;
-  padding-top: 48px;
+  padding: 48px 0;
   overflow: hidden;
   border-radius: 24px;
   background: url('https://framerusercontent.com/images/nJeRjnSdQesLWosBeXJwcczQibo.png?width=2736&height=1536') center / 100% 100% no-repeat;
@@ -227,6 +227,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
 .hero-composer-submit:hover { transform: translateY(-2px); background: #075bd7; }
 .hero-composer-submit svg { width: 33px; height: 33px; fill: none; stroke: currentColor; stroke-width: 1.55; stroke-linecap: round; stroke-linejoin: round; }
 .agent-console {
+  display: none;
   position: absolute;
   z-index: 2;
   left: 50%;
@@ -739,7 +740,7 @@ html.motion-ready .hero-composer { transition-delay: 260ms; }
     width: calc(100% - 24px);
     min-height: 0;
     margin: 0 auto;
-    padding: 32px 12px 0;
+    padding: 32px 12px;
     display: flex;
     flex-direction: column;
     gap: 40px;
