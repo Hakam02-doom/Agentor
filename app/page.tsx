@@ -129,8 +129,10 @@ function Header() {
   const compactRef = useRef(false);
   const previousLayoutRef = useRef<{ surface: DOMRect; items: DOMRect[] } | null>(null);
   const [compact, setCompact] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia('(max-width: 700px)').matches) return;
     let previousY = window.scrollY;
     let frame = 0;
 
@@ -176,11 +178,25 @@ function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [menuOpen]);
+
   useLayoutEffect(() => {
     const header = headerRef.current;
     const previousLayout = previousLayoutRef.current;
     previousLayoutRef.current = null;
-    if (!header || !previousLayout || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!header || !previousLayout || window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(max-width: 700px)').matches) return;
 
     const surface = header.querySelector<HTMLElement>('.header-surface');
     const items = Array.from(header.querySelectorAll<HTMLElement>('.header-motion-item'));
@@ -215,17 +231,30 @@ function Header() {
   }, [compact]);
 
   return (
-    <header ref={headerRef} className={`site-header${compact ? ' is-compact' : ''}`}>
+    <header
+      ref={headerRef}
+      className={`site-header${compact ? ' is-compact' : ''}${menuOpen ? ' is-menu-open' : ''}`}
+      onClick={(event) => {
+        if ((event.target as HTMLElement).closest('a')) setMenuOpen(false);
+      }}
+    >
       <span className="header-surface" aria-hidden="true" />
       <div className="header-motion-item"><Logo /></div>
-      <nav className="header-motion-item" aria-label="Primary navigation">
+      <nav id="primary-navigation" className="header-motion-item" aria-label="Primary navigation">
         <a href="#features">Why Us</a>
         <a href="#process">How it works</a>
         <a href="#testimonials">Testimonial</a>
         <a href="#pricing">Pricing</a>
       </nav>
       <div className="header-motion-item header-action"><PrimaryButton /></div>
-      <button className="menu-button" aria-label="Open menu" type="button"><span /><span /><span /></button>
+      <button
+        className="menu-button"
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        aria-controls="primary-navigation"
+        aria-expanded={menuOpen}
+        type="button"
+        onClick={() => setMenuOpen((open) => !open)}
+      ><span /><span /><span /></button>
     </header>
   );
 }
