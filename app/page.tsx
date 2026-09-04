@@ -971,6 +971,7 @@ function PageLoader() {
     const finish = () => {
       root.classList.remove('page-is-loading');
       setVisible(false);
+      window.dispatchEvent(new Event('agentor:loader-finished'));
     };
 
     root.classList.add('page-is-loading');
@@ -1103,6 +1104,183 @@ function HeroComposer() {
   );
 }
 
+const maxonHeroWords = [
+  { text: 'Agents', line: 1 },
+  { text: 'That', line: 1 },
+  { text: 'Think.', line: 1 },
+  { text: 'Execute', line: 2 },
+  { text: '24/7.', line: 2 },
+];
+const SHOW_LEGACY_HERO_BACKUP = false;
+
+function MaxonComposerIcon({ name }: { name: 'search' | 'attachment' | 'bag' | 'wallet' }) {
+  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      {name === 'search' ? <><circle {...common} cx="8.7" cy="8.7" r="4.4" /><path {...common} d="m12 12 3.7 3.7" /></> : null}
+      {name === 'attachment' ? <path {...common} d="m6.8 10.6 4.9-4.9a2.3 2.3 0 0 1 3.2 3.2l-6.2 6.2a3.6 3.6 0 0 1-5.1-5.1l6.1-6.1" /> : null}
+      {name === 'bag' ? <><path {...common} d="M5 8h10l1 8H4l1-8Z" /><path {...common} d="M7.5 8V6.6a2.5 2.5 0 0 1 5 0V8" /></> : null}
+      {name === 'wallet' ? <><rect {...common} x="3.5" y="5" width="13" height="10" rx="2" /><path {...common} d="M12 8.3h4.5v3.4H12a1.7 1.7 0 1 1 0-3.4Z" /></> : null}
+    </svg>
+  );
+}
+
+function MaxonHero() {
+  const [entered, setEntered] = useState(false);
+  const [typedText, setTypedText] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useLayoutEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      const reducedFrame = requestAnimationFrame(() => setEntered(true));
+      return () => cancelAnimationFrame(reducedFrame);
+    }
+
+    let frame = 0;
+    const enter = () => {
+      frame = requestAnimationFrame(() => setEntered(true));
+    };
+
+    window.addEventListener('agentor:loader-finished', enter, { once: true });
+    if (!document.documentElement.classList.contains('page-is-loading')) enter();
+    return () => {
+      window.removeEventListener('agentor:loader-finished', enter);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!entered) return;
+    const message = 'Give your agent a goal';
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      const reducedTimer = window.setTimeout(() => setTypedText(message), 0);
+      return () => window.clearTimeout(reducedTimer);
+    }
+
+    let characterIndex = 0;
+    let deleting = false;
+    let timer = 0;
+    const tick = () => {
+      if (!deleting) {
+        characterIndex += 1;
+        setTypedText(message.slice(0, characterIndex));
+        if (characterIndex === message.length) {
+          deleting = true;
+          timer = window.setTimeout(tick, 1500);
+          return;
+        }
+        timer = window.setTimeout(tick, 66);
+        return;
+      }
+
+      characterIndex -= 1;
+      setTypedText(message.slice(0, characterIndex));
+      if (characterIndex === 0) {
+        deleting = false;
+        timer = window.setTimeout(tick, 520);
+        return;
+      }
+      timer = window.setTimeout(tick, 38);
+    };
+
+    timer = window.setTimeout(tick, 760);
+    return () => window.clearTimeout(timer);
+  }, [entered]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
+  return (
+    <section className={`maxon-hero${entered ? ' is-entered' : ''}${menuOpen ? ' is-menu-open' : ''}`} aria-labelledby="hero-title">
+      <div className="maxon-hero-background" aria-hidden="true">
+        <img src="https://framerusercontent.com/images/28sZavtDiVhl5OqxsUAQucL6xZU.png?width=4800&height=3036" alt="" />
+      </div>
+
+      <header className="maxon-nav">
+        <a className="maxon-brand" href="#top" aria-label="Agentor home">
+          <img src="/agentor-mark.svg" alt="" />
+          <span>Agentor</span>
+        </a>
+        <nav id="maxon-navigation" aria-label="Primary navigation" onClick={() => setMenuOpen(false)}>
+          <a href="#features">Why Us</a>
+          <a href="#process">How it works</a>
+          <a href="#testimonials">Testimonial</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a className="maxon-nav-cta" href="#pricing">See Demo</a>
+        <button
+          className="maxon-menu-button"
+          type="button"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-controls="maxon-navigation"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        ><span /><span /></button>
+      </header>
+
+      <div className="maxon-hero-content">
+        <div className="maxon-eyebrow">AI AGENTS FOR COMPLEX WORKFLOWS — ON AUTOPILOT</div>
+        <h1 id="hero-title">
+          <span className="maxon-heading-line">
+            {maxonHeroWords.filter(({ line }) => line === 1).map(({ text }, index) => <span className="maxon-heading-word" style={{ '--word-index': index } as React.CSSProperties} key={text}>{text}</span>)}
+          </span>
+          <span className="maxon-heading-line maxon-heading-line-blue">
+            {maxonHeroWords.filter(({ line }) => line === 2).map(({ text }, index) => <span className="maxon-heading-word" style={{ '--word-index': index + 3 } as React.CSSProperties} key={text}>{text}</span>)}
+          </span>
+        </h1>
+
+        <div className="maxon-composer" aria-label="Animated AI agent prompt example">
+          <div className="maxon-composer-input" aria-hidden="true">
+            <span>{typedText}</span><i />
+          </div>
+          <div className="maxon-composer-toolbar">
+            <div className="maxon-composer-tools" aria-hidden="true">
+              <button type="button" tabIndex={-1}><MaxonComposerIcon name="search" /></button>
+              <button type="button" tabIndex={-1}><MaxonComposerIcon name="attachment" /></button>
+              <button type="button" tabIndex={-1}><MaxonComposerIcon name="bag" /></button>
+              <button type="button" tabIndex={-1}><MaxonComposerIcon name="wallet" /></button>
+            </div>
+            <a className="maxon-composer-submit" href="#process" aria-label="Build this agent">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15.4V4.6M5.8 8.8 10 4.6l4.2 4.2" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <div className="maxon-hero-actions">
+          <a className="maxon-action maxon-action-dark" href="#process"><span>Build agent</span></a>
+          <a className="maxon-action maxon-action-blue" href="#pricing"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 5 8 5-8 5V5Z" /></svg><span>See Demo</span></a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LegacyHeroBackup() {
+  return (
+    <>
+      <Header />
+      <section className="hero" aria-labelledby="legacy-hero-title">
+        <div className="hero-copy">
+          <TrustPill />
+          <RevealHeading as="h1" id="legacy-hero-title" mount breakAfter={3}>Deploy agents that do the actual work</RevealHeading>
+          <p data-reveal="rise" data-reveal-mount>Build, orchestrate, and scale intelligent agents that integrate with every tool, run 24/7, and handle your most complex workflows.</p>
+          <HeroComposer />
+        </div>
+        <AgentConsole />
+      </section>
+    </>
+  );
+}
+
 export default function Home() {
   useScrollReveals();
 
@@ -1110,16 +1288,8 @@ export default function Home() {
     <>
       <PageLoader />
       <main id="top">
-        <Header />
-        <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <TrustPill />
-            <RevealHeading as="h1" id="hero-title" mount breakAfter={3}>Deploy agents that do the actual work</RevealHeading>
-            <p data-reveal="rise" data-reveal-mount>Build, orchestrate, and scale intelligent agents that integrate with every tool, run 24/7, and handle your most complex workflows.</p>
-            <HeroComposer />
-          </div>
-          <AgentConsole />
-        </section>
+        {SHOW_LEGACY_HERO_BACKUP ? <LegacyHeroBackup /> : null}
+        <MaxonHero />
         <Features />
         <Process />
         <Testimonials />
